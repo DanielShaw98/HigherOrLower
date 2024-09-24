@@ -1,18 +1,23 @@
 import random
 
-def get_random_countries(country_data, count=1):
+def get_random_countries(country_data, count=2):
     return random.sample(country_data, count)
 
-def play_game_round(country_data, current_country):
-    new_country = random.choice(country_data)
-    print(f"Current Country: {current_country['name']['common']} {current_country['flag']}")
-    print(f"New Country: {new_country['name']['common']} {new_country['flag']}")
+def play_game_round(current_country, new_country, user_guess, country_data):
+    if (user_guess == 'h' and new_country['population'] > current_country['population']) or \
+       (user_guess == 'l' and new_country['population'] < current_country['population']):
 
-    user_guess = input(f"Does {new_country['name']['common']} have a higher or lower population than {current_country['name']['common']}? (h/l): ").strip().lower()
-    if (user_guess == 'h' and current_country['population'] < new_country['population'] or
-        user_guess == 'l' and current_country['population'] > new_country['population']):
-        print(f"Correct! {new_country['name']['common']} population is {new_country['population']} and {current_country['name']['common']} population is {current_country['population']}")
-        return new_country
+        next_country = random.choice(country_data)
+        return {
+            'result': 'correct',
+            'new_country': {
+                'name': next_country['name']['common'],
+                'population': next_country['population'],
+                'flag': next_country['flags']['png']
+            }
+        }
     else:
-        print(f"Wrong, Game Over! {new_country['name']['common']} population is {new_country['population']} and {current_country['name']['common']} population is {current_country['population']}")
-        return None
+        return {
+            'result': 'wrong',
+            'message': f"Game Over! {new_country['name']['common']} has a population of {new_country['population']}, while {current_country['name']['common']} has {current_country['population']}."
+        }
