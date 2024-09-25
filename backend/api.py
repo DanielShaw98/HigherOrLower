@@ -3,7 +3,7 @@ import requests
 BASE_URL = 'https://restcountries.com/v3.1/all'
 
 def fetch_all_countries():
-    fields = "name,flag,population"
+    fields = "name,flags,population"
     response = requests.get(f"{BASE_URL}?fields={fields}")
 
     if response.status_code == 200:

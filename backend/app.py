@@ -18,12 +18,12 @@ def start_game():
         'current_country': {
             'name': current_country['name']['common'],
             'population': current_country['population'],
-            'flag': current_country['flag']
+            'flags': current_country['flags']['svg']
         },
         'new_country': {
             'name': new_country['name']['common'],
             'population': new_country['population'],
-            'flag': new_country['flag']
+            'flags': new_country['flags']['svg']
         }
     })
 
