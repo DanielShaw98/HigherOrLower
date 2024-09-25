@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import TitleCard from './components/TitleCard/TitleCard';
+import GameScreen from './components/GameScreen/GameScreen';
 
 function App() {
   const [currentCountry, setCurrentCountry] = useState(null);
   const [newCountry, setNewCountry] = useState(null);
   const [result, setResult] = useState('');
   const [gameOver, setGameOver] = useState(false);
-  const [guess, setGuess] = useState('');
 
   useEffect(() => {
     startGame();
@@ -22,7 +23,7 @@ function App() {
     }
   };
 
-  const handleGuess = async () => {
+  const handleGuess = async (guess) => {
     try {
       const response = await axios.post('http://localhost:8000/submit-guess', {
         current_country: currentCountry,
@@ -32,11 +33,12 @@ function App() {
 
       if (response.data.result === 'wrong') {
         setGameOver(true);
-        setResult(response.data.message);
+        setResult(`Game Over! ${currentCountry.name} has a population of ${currentCountry.population.toLocaleString()}, while ${newCountry.name} has ${newCountry.population.toLocaleString()}.`);
       } else {
+        const answer = response.data.answer;
         setCurrentCountry(newCountry);
         setNewCountry(response.data.new_country);
-        setResult(response.data.message);
+        setResult(`Correct! ${currentCountry.name} has a population of ${currentCountry.population.toLocaleString()} which is ${answer} than ${newCountry.name}.`);
       }
     } catch (error) {
       console.error('Error submitting guess', error);
@@ -45,27 +47,14 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Population Higher or Lower Game</h1>
-      {gameOver ? (
-        <h2>{result}</h2>
-      ) : (
-        <>
-          <div>
-            <h2>Current Country: {currentCountry?.name}</h2>
-          </div>
-          <div>
-            <h2>New Country: {newCountry?.name}</h2>
-          </div>
-          <input
-            type="text"
-            value={guess}
-            onChange={(e) => setGuess(e.target.value)}
-            placeholder="Enter 'h' for higher or 'l' for lower"
-          />
-          <button onClick={handleGuess}>Submit Guess</button>
-          <p>{result}</p>
-        </>
-      )}
+      <TitleCard />
+      <GameScreen
+        gameOver={gameOver}
+        result={result}
+        currentCountry={currentCountry}
+        newCountry={newCountry}
+        handleGuess={handleGuess}
+      />
     </div>
   );
 }
