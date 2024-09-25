@@ -34,8 +34,8 @@ def submit_guess():
     new_country = data['new_country']
     user_guess = data['guess']
 
-    result = play_game_round(country_data, current_country, new_country, user_guess)
-    return jsonify(result)
+    result = play_game_round(current_country, new_country, user_guess, country_data)
+    return result
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)

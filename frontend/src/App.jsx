@@ -8,7 +8,6 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [guess, setGuess] = useState('');
 
-  // Start the game and get initial two countries
   useEffect(() => {
     startGame();
   }, []);
@@ -37,7 +36,7 @@ function App() {
       } else {
         setCurrentCountry(newCountry);
         setNewCountry(response.data.new_country);
-        setResult('Correct! Continue...');
+        setResult(response.data.message);
       }
     } catch (error) {
       console.error('Error submitting guess', error);
@@ -53,7 +52,6 @@ function App() {
         <>
           <div>
             <h2>Current Country: {currentCountry?.name}</h2>
-            <h3>Population: {currentCountry?.population}</h3>
           </div>
           <div>
             <h2>New Country: {newCountry?.name}</h2>
