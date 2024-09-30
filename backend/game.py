@@ -4,16 +4,25 @@ import random
 def get_random_countries(country_data, count=2):
     return random.sample(country_data, count)
 
-def play_game_round(current_country, new_country, user_guess, country_data):
+def check_guess(current_country, new_country, user_guess):
     if (user_guess == 'h' and new_country['population'] > current_country['population']) or \
        (user_guess == 'l' and new_country['population'] < current_country['population']):
+        return 'correct'
+    else:
+        return 'wrong'
+
+def play_game_round(current_country, new_country, user_guess, country_data):
+    if check_guess(current_country, new_country, user_guess) == 'correct':
 
         next_country = random.choice(country_data)
+        while next_country['name'] == new_country['name']:
+            next_country = random.choice(country_data)
+
         answer = 'lower' if new_country['population'] > current_country['population'] else 'higher'
+
         return jsonify({
             'result': 'correct',
             'answer': answer,
-            # 'message': f"Correct! {current_country['name']} has a population of {current_country['population']} which is {answer} than {new_country['name']}.",
             'new_country': {
                 'name': next_country['name']['common'],
                 'population': next_country['population'],
@@ -22,6 +31,5 @@ def play_game_round(current_country, new_country, user_guess, country_data):
         })
     else:
         return jsonify({
-            'result': 'wrong',
-            # 'message': f"Game Over! {new_country['name']} has a population of {new_country['population']}, while {current_country['name']} has {current_country['population']}."
+            'result': 'wrong'
         })

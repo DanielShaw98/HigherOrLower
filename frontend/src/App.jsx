@@ -6,10 +6,11 @@ import GameScreen from './components/GameScreen/GameScreen';
 function App() {
   const [currentCountry, setCurrentCountry] = useState(null);
   const [newCountry, setNewCountry] = useState(null);
-  const [result, setResult] = useState('');
   const [gameOver, setGameOver] = useState(false);
   const [currentPopulation, setCurrentPopulation] = useState(null);
   const [newPopulation, setNewPopulation] = useState(null);
+  const [score, setScore] = useState(0);
+  const [highestScore, setHighestScore] = useState(0);
 
   useEffect(() => {
     startGame();
@@ -22,9 +23,15 @@ function App() {
       setNewCountry(response.data.new_country);
       setCurrentPopulation(null);
       setNewPopulation(null);
+      setScore(0);
+      setGameOver(false);
     } catch (error) {
       console.error('Error starting the game', error);
     }
+  };
+
+  const resetGame = () => {
+    startGame();
   };
 
   const handleGuess = async (guess) => {
@@ -37,16 +44,19 @@ function App() {
 
       if (response.data.result === 'wrong') {
         setGameOver(true);
-        setResult(`Game Over! ${currentCountry.name} has a population of ${currentCountry.population.toLocaleString()}, while ${newCountry.name} has ${newCountry.population.toLocaleString()}.`);
         setCurrentPopulation(currentCountry.population);
         setNewPopulation(newCountry.population);
+        if (score > highestScore) {
+          setHighestScore(score);
+          localStorage.setItem('highestScore', score);
+        }
       } else {
         const answer = response.data.answer;
         setCurrentCountry(newCountry);
         setCurrentPopulation(newCountry.population);
         setNewCountry(response.data.new_country);
         setNewPopulation(response.data.new_country.population);
-        setResult(`Correct! ${currentCountry.name} has a population of ${currentCountry.population.toLocaleString()} which is ${answer} than ${newCountry.name}.`);
+        setScore(score + 1);
       }
     } catch (error) {
       console.error('Error submitting guess', error);
@@ -58,12 +68,14 @@ function App() {
       <TitleCard />
       <GameScreen
         gameOver={gameOver}
-        result={result}
         currentCountry={currentCountry}
         newCountry={newCountry}
         handleGuess={handleGuess}
         currentPopulation={currentPopulation}
         newPopulation={newPopulation}
+        score={score}
+        highestScore={highestScore}
+        resetGame={resetGame}
       />
     </div>
   );

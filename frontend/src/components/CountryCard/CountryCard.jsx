@@ -5,7 +5,7 @@ const CountryCard = ({ country, currentPopulation, newPopulation, handleGuess, g
   if (!country) {
     return (
     <div>
-      <h2>Loading...</h2>
+      <h2 className="loading-title">Loading...</h2>
     </div>
     )
   }
@@ -20,11 +20,11 @@ const CountryCard = ({ country, currentPopulation, newPopulation, handleGuess, g
       {rightCard && !gameOver && <div className="button-container">
         <button onClick={() => handleGuess('h')} className="higher-button">
           Higher
-          <img src="../../../public/arrow-up.svg" alt="white arrow pointing upwards" />
+          <img src="/arrow-up.svg" alt="white arrow pointing upwards" />
         </button>
         <button onClick={() => handleGuess('l')} className="lower-button">
           Lower
-          <img src="../../../public/arrow-down.svg" alt="white arrow pointing downwards" />
+          <img src="/arrow-down.svg" alt="white arrow pointing downwards" />
         </button>
       </div>}
     </div>

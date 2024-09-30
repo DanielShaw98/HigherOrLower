@@ -67,3 +67,8 @@
   background-color: #2D00FF;
   color: #F8F8F8;
 }
+
+.loading-title {
+  text-align: center;
+  margin: 20px;
+}
