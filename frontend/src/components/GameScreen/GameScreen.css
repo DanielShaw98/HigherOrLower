@@ -3,6 +3,7 @@
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
+  color: #F8F8F8;
 
   p {
     font-size: 24px;
@@ -32,8 +33,9 @@
     align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease-in-out;
-    background-color: #00AB66;
-    color: #F8F8F8;
+    background-color: #FFD700;
+    color: #022C43;
+    font-weight: 700;
   }
 
   button:hover {

@@ -1,13 +1,22 @@
 import React from 'react';
 import './TitleCard.css';
+import HowToPlay from '../HowToPlay/HowToPlay';
 
 const TitleCard = () => {
+  const title = "Higher or Lower: Country Populations";
+  const titleArray = title.split('');
+
   return (
     <div className="title-card">
-      <h1>Higher or Lower: Country Populations</h1>
+      <h1>
+        {titleArray.map((char, index) => (
+          <span key={index} className="text-animate-hover">
+            {char === ' ' ? '\u00A0' : char}
+          </span>
+        ))}
+      </h1>
       <div className="game-info">
-        <h3>How to play:</h3>
-        <p>Click higher or lower depending on whether you think the country on the right has a higher or lower population than the country on the left.</p>
+        <HowToPlay />
       </div>
     </div>
   );
