@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from api import fetch_all_countries
 from game import get_random_countries, play_game_round
-import os
 
 app = Flask(__name__)
 CORS(app)
@@ -39,4 +38,4 @@ def submit_guess():
     return result
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8000)), debug=True)
+    app.run(port=8000, debug=True)
