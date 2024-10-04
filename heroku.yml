@@ -1,9 +1,0 @@
-build:
-  config:
-    HEROKU_PYTHON_VERSION: "3.12.4"
-  source:
-    path: backend
-
-release:
-  command:
-    - gunicorn app:app
