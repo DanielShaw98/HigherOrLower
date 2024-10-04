@@ -15,7 +15,7 @@ def play_game_round(current_country, new_country, user_guess, country_data):
     if check_guess(current_country, new_country, user_guess) == 'correct':
 
         next_country = random.choice(country_data)
-        while next_country['name'] == new_country['name']:
+        while next_country['name']['common'] == new_country['name']:
             next_country = random.choice(country_data)
 
         answer = 'lower' if new_country['population'] > current_country['population'] else 'higher'
