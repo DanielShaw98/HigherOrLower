@@ -12,6 +12,7 @@ const GameScreen = ({
   currentPopulation = 0,
   newPopulation = 0,
   resetGame,
+  winningMessage = '',
 }) => {
   return (
     <div className="game-screen">
@@ -19,8 +20,9 @@ const GameScreen = ({
         <CountryCard country={currentCountry} currentPopulation={currentPopulation} gameOver={gameOver} />
         {gameOver ? (
           <div className="middle-container">
+            {winningMessage && <h2>{winningMessage}</h2>}
             <button onClick={() => resetGame()}>Play again</button>
-            <h3>VS</h3>
+            {!winningMessage && <h3>VS</h3>}
           </div>
         ) : (
           <div>
@@ -53,6 +55,7 @@ GameScreen.propTypes = {
   currentPopulation: PropTypes.number,
   newPopulation: PropTypes.number,
   resetGame: PropTypes.func.isRequired,
+  winningMessage: PropTypes.string,
 };
 
 export default GameScreen

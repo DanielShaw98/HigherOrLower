@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import TitleCard from './components/TitleCard/TitleCard';
 import GameScreen from './components/GameScreen/GameScreen';
+import throwConfetti from './utils/confetti';
 
 function App() {
   const [currentCountry, setCurrentCountry] = useState(null);
@@ -11,6 +12,7 @@ function App() {
   const [newPopulation, setNewPopulation] = useState(null);
   const [score, setScore] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
+  const [winningMessage, setWinningMessage] = useState('');
 
   useEffect(() => {
     startGame();
@@ -47,12 +49,14 @@ function App() {
         setScore(score + 1)
         setHighestScore(score + 1);
         localStorage.setItem('highestScore', score);
-        alert("Congratulations! You've guessed all available countries!");
+        throwConfetti();
+        setWinningMessage("Congratulations! You won the game!");
       }
       else if (response.data.result === 'wrong') {
         setGameOver(true);
         setCurrentPopulation(currentCountry.population);
         setNewPopulation(newCountry.population);
+        setWinningMessage('');
         if (score > highestScore) {
           setHighestScore(score);
           localStorage.setItem('highestScore', score);
@@ -83,6 +87,7 @@ function App() {
         score={score}
         highestScore={highestScore}
         resetGame={resetGame}
+        winningMessage={winningMessage}
       />
     </div>
   );
