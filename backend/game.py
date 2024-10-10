@@ -12,8 +12,6 @@ def check_guess(current_country, new_country, user_guess):
         return 'wrong'
 
 def play_game_round(current_country, new_country, user_guess, country_data, used_countries):
-    total_available_countries = len(country_data)
-
     if check_guess(current_country, new_country, user_guess) == 'correct':
         available_countries = [country for country in country_data if country['name']['common'] not in used_countries]
 
