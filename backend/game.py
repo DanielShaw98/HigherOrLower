@@ -26,11 +26,6 @@ def play_game_round(current_country, new_country, user_guess, country_data, used
         next_country = random.choice(available_countries)
         used_countries.append(next_country['name']['common'])
 
-        # print(total_available_countries)
-        # print(len(used_countries))
-
-        # has_won = len(used_countries) >= total_available_countries
-
         answer = 'lower' if new_country['population'] > current_country['population'] else 'higher'
 
         return jsonify({
