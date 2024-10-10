@@ -11,12 +11,25 @@ def check_guess(current_country, new_country, user_guess):
     else:
         return 'wrong'
 
-def play_game_round(current_country, new_country, user_guess, country_data):
-    if check_guess(current_country, new_country, user_guess) == 'correct':
+def play_game_round(current_country, new_country, user_guess, country_data, used_countries):
+    total_available_countries = len(country_data)
 
-        next_country = random.choice(country_data)
-        while next_country['name']['common'] == new_country['name']:
-            next_country = random.choice(country_data)
+    if check_guess(current_country, new_country, user_guess) == 'correct':
+        available_countries = [country for country in country_data if country['name']['common'] not in used_countries]
+
+        if not available_countries:
+            has_won = True
+            return jsonify({
+                'has_won': has_won
+            })
+
+        next_country = random.choice(available_countries)
+        used_countries.append(next_country['name']['common'])
+
+        # print(total_available_countries)
+        # print(len(used_countries))
+
+        # has_won = len(used_countries) >= total_available_countries
 
         answer = 'lower' if new_country['population'] > current_country['population'] else 'higher'
 

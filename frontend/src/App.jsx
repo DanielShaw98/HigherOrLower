@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import TitleCard from './components/TitleCard/TitleCard';
 import GameScreen from './components/GameScreen/GameScreen';
@@ -42,7 +42,14 @@ function App() {
         guess: guess,
       });
 
-      if (response.data.result === 'wrong') {
+      if (response.data.has_won) {
+        setGameOver(true);
+        setScore(score + 1)
+        setHighestScore(score + 1);
+        localStorage.setItem('highestScore', score);
+        alert("Congratulations! You've guessed all available countries!");
+      }
+      else if (response.data.result === 'wrong') {
         setGameOver(true);
         setCurrentPopulation(currentCountry.population);
         setNewPopulation(newCountry.population);
@@ -50,8 +57,8 @@ function App() {
           setHighestScore(score);
           localStorage.setItem('highestScore', score);
         }
-      } else {
-        const answer = response.data.answer;
+      }
+      else {
         setCurrentCountry(newCountry);
         setCurrentPopulation(newCountry.population);
         setNewCountry(response.data.new_country);

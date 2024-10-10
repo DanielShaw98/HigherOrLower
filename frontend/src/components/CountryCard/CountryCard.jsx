@@ -1,8 +1,15 @@
-import React from 'react';
 import './CountryCard.css';
+import PropTypes from 'prop-types';
 
-const CountryCard = ({ country, currentPopulation, newPopulation, handleGuess, gameOver, rightCard }) => {
-  if (!country) {
+const CountryCard = ({
+  country = {},
+  currentPopulation,
+  newPopulation,
+  handleGuess,
+  gameOver,
+  rightCard
+}) => {
+  if (!country || Object.keys(country).length === 0) {
     return (
     <div>
       <h2 className="loading-title">Loading...</h2>
@@ -29,6 +36,15 @@ const CountryCard = ({ country, currentPopulation, newPopulation, handleGuess, g
       </div>}
     </div>
   )
+}
+
+CountryCard.propTypes = {
+  country: PropTypes.object,
+  currentPopulation: PropTypes.number,
+  newPopulation: PropTypes.number,
+  handleGuess: PropTypes.func,
+  gameOver: PropTypes.bool,
+  rightCard: PropTypes.bool,
 }
 
 export default CountryCard
